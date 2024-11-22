@@ -30,10 +30,6 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: "Get repository default GIT branch"
-        # yamllint disable-line rule:line-length
-        uses: ModeSevenIndustrialSolutions/issue-id/.github/actions/git-default-branch@main
-
       - name: "Check/Add commit message JIRA ticket"
         # yamllint disable-line rule:line-length
         uses: ModeSevenIndustrialSolutions/issue-id/.github/actions/inject-issue-id-action@main
