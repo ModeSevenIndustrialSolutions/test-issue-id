@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 # SPDX-FileCopyrightText: 2024 The Linux Foundation
 
-name: "🎟️ JIRA Ticket"
+name: "Pull Request"
 
 # yamllint disable-line rule:truthy
 on:
@@ -17,8 +17,8 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  pull-request:
-    name: "Pull Request"
+  issue-id:
+    name: "🎟️ JIRA Ticket"
     runs-on: "ubuntu-latest"
     if: vars.ISSUE_ID_LOOKUP_JSON != ''
     permissions:
@@ -30,15 +30,9 @@ jobs:
           ref: ${{ github.head_ref }}
           fetch-depth: 0
 
-      - name: "Debug workflow environment"
-        shell: bash
-        run: |
-          # Debugging the environment
-          echo "ref: ${{ github.ref }}"
-          echo "workflow_ref: ${{ github.workflow_ref }}"
-          # Don't run if:
-          # refs/heads/main or refs/heads/master or enumerated HEAD branch
-          echo "Default branch: ${{ env.default_branch }}"
+      - name: "Get repository default GIT branch"
+        # yamllint disable-line rule:line-length
+        uses: ModeSevenIndustrialSolutions/issue-id/.github/actions/git-default-branch@main
 
       - name: "Check/Add commit message JIRA ticket"
         # yamllint disable-line rule:line-length
