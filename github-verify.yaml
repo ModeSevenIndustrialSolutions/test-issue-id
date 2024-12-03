@@ -18,7 +18,13 @@ jobs:
   issue-id:
     name: "JIRA ticket"
     if: vars.ISSUE_ID_LOOKUP_JSON != ''
-    # yamllint disable-line rule:line-length
-    uses: ModeSevenIndustrialSolutions/issue-id/.github/workflows/reuse-issue-id.yaml@main
+    runs-on: "ubuntu-latest"
     permissions:
       contents: write
+    steps:
+      - name: "Check/Add commit message JIRA ticket"
+        # yamllint disable-line rule:line-length
+        uses: ModeSevenIndustrialSolutions/issue-id/.github/actions/inject-issue-id-action@main
+        with:
+          issue_id_lookup_json: ${{ vars.ISSUE_ID_LOOKUP_JSON }}
+          default: "CIMAN-69"
